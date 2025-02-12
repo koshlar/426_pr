@@ -5,7 +5,6 @@
 1) Authorization/Authentication.
 2) Товары:
     1) CRUD.
-    2) Базовый функционал корзины.
 
 ## Как запустить
 
