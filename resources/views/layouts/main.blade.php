@@ -16,6 +16,9 @@
             <h1>Logo</h1>
             <div class="header__menu">
                 @auth
+                    @if (auth()->user()->role_id == 3)
+                        <a href="{{ route('categories.index') }}" class="button">Product categories</a>
+                    @endif
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button type="submit">

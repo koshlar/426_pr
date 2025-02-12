@@ -41,7 +41,7 @@ class ProductController extends Controller
     if ($request->hasFile('image')) {
       Storage::disk("public")->makeDirectory('images/products');
 
-      $filename = basename(Storage::disk("public")->put("images/products/", file_get_contents($request->file('image'))));
+      $filename = basename($request->file('image')->store('images/products', 'public'));
     }
 
     Product::create([
@@ -79,7 +79,7 @@ class ProductController extends Controller
     if ($request->hasFile('image')) {
       Storage::disk("public")->makeDirectory('images/products');
 
-      $filename = basename(Storage::disk("public")->put("images/products/", file_get_contents($request->file('image'))));
+      $filename = basename($request->file('image')->store('images/products', 'public'));
 
       $product->update(['image' => $filename]);
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegLogController;
 use Illuminate\Support\Facades\Route;
@@ -45,3 +46,7 @@ Route::controller(ProductController::class)
     Route::get('/', 'index')->name('products.index');
     Route::get('/{product}', 'show')->name('products.show');
   });
+
+Route::resource('categories', ProductCategoryController::class)
+  ->except(['show'])
+  ->middleware('admin');
