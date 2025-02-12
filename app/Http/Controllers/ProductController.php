@@ -10,12 +10,12 @@ class ProductController extends Controller
 {
   public function index()
   {
-    return view('pages.products.index');
+    return view('pages.products.index', ['products' => Product::all()]);
   }
 
   public function show($id)
   {
-    return view('pages.products.show');
+    return view('pages.products.show', ['product' => Product::findOrFail($id)]);
   }
 
   /**
@@ -39,13 +39,9 @@ class ProductController extends Controller
     ]);
 
     if ($request->hasFile('image')) {
-      $image = $request->file('image');
-      $filename = uniqid() . $image->extension();
+      Storage::disk("public")->makeDirectory('images/products');
 
-      if (Storage::disk('public')->exists('images/products'))
-        Storage::disk('public')->makeDirectory('images/products');
-
-      Storage::disk('public')->put('images/products/' . $filename, file_get_contents($image));
+      $filename = basename(Storage::disk("public")->put("images/products/", file_get_contents($request->file('image'))));
     }
 
     Product::create([
@@ -63,7 +59,7 @@ class ProductController extends Controller
    */
   public function edit($id)
   {
-    return view('pages.products.edit');
+    return view('pages.products.edit', ['product' => Product::findOrFail($id)]);
   }
 
   /**
@@ -72,20 +68,29 @@ class ProductController extends Controller
   public function update(Request $request, $id)
   {
     $request->validate([
-      'email' => 'required|string|email|exists:users,email',
-      'password' => 'required|string',
+      'name' => 'required|string|min:2',
+      'price' => 'required|string|between:0,1000000',
+      'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:3000',
+      'description' => 'required|string|between:10,1500',
     ]);
 
-    $credentials = $request->only(['email', 'password']);
+    $product = Product::findOrFail($id);
 
-    if (Auth::attempt($credentials, true)) {
-      $request->session()->regenerate();
-      return redirect('/');
+    if ($request->hasFile('image')) {
+      Storage::disk("public")->makeDirectory('images/products');
+
+      $filename = basename(Storage::disk("public")->put("images/products/", file_get_contents($request->file('image'))));
+
+      $product->update(['image' => $filename]);
     }
-    return redirect()
-      ->back()
-      ->withInput()
-      ->withErrors(['email' => 'Invalid credentials.']);
+
+    $product->update([
+      'name' => $request->name,
+      'price' => $request->price,
+      'description' => $request->description,
+    ]);
+
+    return redirect(route('products.index'));
   }
 
   /**
@@ -93,7 +98,10 @@ class ProductController extends Controller
    */
   public function destroy($id)
   {
-    Auth::logout();
-    return redirect('/');
+    $product = Product::findOrFail($id);
+
+    $product->delete();
+
+    return redirect(route('products.index'));
   }
 }
