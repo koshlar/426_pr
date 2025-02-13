@@ -24,7 +24,7 @@
         @component('components.inputs.InputContainer', ['name' => 'product_category_id'])
             <select name="product_category_id">
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" @selected(old('product_category_id') && old('product_category_id') == $category->id)>{{ $category->name }}</option>
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
         @endcomponent

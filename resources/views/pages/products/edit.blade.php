@@ -25,6 +25,13 @@
             'placeholder' => 'Description',
             'value' => $product->description,
         ])
+        @component('components.inputs.InputContainer', ['name' => 'product_category_id'])
+            <select name="product_category_id">
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        @endcomponent
         <button type="submit">Create product</button>
     </form>
 @endsection
