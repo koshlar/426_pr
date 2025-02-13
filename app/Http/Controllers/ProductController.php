@@ -36,6 +36,7 @@ class ProductController extends Controller
       'price' => 'required|string|between:0,1000000',
       'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:3000',
       'description' => 'required|string|between:10,1500',
+      'product_category_id' => 'required|string|exists:product_categories,id',
     ]);
 
     if ($request->hasFile('image')) {
@@ -49,6 +50,7 @@ class ProductController extends Controller
       'price' => $request->price,
       'description' => $request->description,
       'image' => $filename,
+      'product_category_id' => $request->product_category_id,
     ]);
 
     return redirect(route('products.index'));
@@ -72,6 +74,7 @@ class ProductController extends Controller
       'price' => 'required|string|between:0,1000000',
       'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:3000',
       'description' => 'required|string|between:10,1500',
+      'product_category_id' => 'required|string|exists:product_categories,id',
     ]);
 
     $product = Product::findOrFail($id);
@@ -88,6 +91,7 @@ class ProductController extends Controller
       'name' => $request->name,
       'price' => $request->price,
       'description' => $request->description,
+      'product_category_id' => $request->product_category_id,
     ]);
 
     return redirect(route('products.index'));

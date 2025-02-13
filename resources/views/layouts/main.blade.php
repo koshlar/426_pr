@@ -18,6 +18,7 @@
                 @auth
                     @if (auth()->user()->role_id == 3)
                         <a href="{{ route('categories.index') }}" class="button">Product categories</a>
+                        <a href="{{ route('products.index') }}" class="button">Products</a>
                     @endif
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
