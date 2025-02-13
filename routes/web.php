@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CartProductController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegLogController;
+use App\Models\CartProduct;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,3 +52,21 @@ Route::controller(ProductController::class)
 Route::resource('categories', ProductCategoryController::class)
   ->except(['show'])
   ->middleware('admin');
+
+Route::controller(CartProductController::class)
+  ->middleware('auth')
+  ->group(
+    function () {
+      Route::prefix('cart')->group(function () {
+        Route::get('/', 'index')->name('cart.index');
+        Route::post('/', 'store')->name('cart.store');
+        Route::patch('/add', 'add')->name('cart.add');
+        Route::patch('/remove', 'remove')->name('cart.remove');
+      });
+    }
+  );
+
+  // Route::prefix('orders')->group(function() {
+  //   Route::get('/', 'index')->name('orders.index');
+  //   Route::post('/', 'store')->name('orders.status.change');
+  // });

@@ -20,6 +20,7 @@
                         <a href="{{ route('categories.index') }}" class="button">Product categories</a>
                         <a href="{{ route('products.index') }}" class="button">Products</a>
                     @endif
+                    <a href="{{ route('cart.index') }}" class="button">Cart</a>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button type="submit">

@@ -13,9 +13,10 @@
                 @endforeach
                 <script>
                     const select = document.querySelector('#pci');
-                    select.onclick = () => {
+                    select.onchange = () => {
                         const url = new URL(document.location.href);
-                        document.location.href = url.searchParams.set('pci', select.value).toString();
+                        url.searchParams.set('pci', select.value);
+                        document.location.href = url.toString();
                     }
                 </script>
             </select>
