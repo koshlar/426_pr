@@ -6,7 +6,7 @@
         enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        @include('components.Input', [
+        @include('components.inputs.Input', [
             'name' => 'name',
             'placeholder' => 'Name',
             'value' => $category->name,

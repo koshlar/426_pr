@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +24,7 @@ class ProductController extends Controller
    */
   public function create()
   {
-    return view('pages.products.create');
+    return view('pages.products.create', ['categories' => ProductCategory::all()]);
   }
 
   /**
@@ -61,7 +62,7 @@ class ProductController extends Controller
    */
   public function edit($id)
   {
-    return view('pages.products.edit', ['product' => Product::findOrFail($id)]);
+    return view('pages.products.edit', ['product' => Product::findOrFail($id), 'categories' => ProductCategory::all()]);
   }
 
   /**

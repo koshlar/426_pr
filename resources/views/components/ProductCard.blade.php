@@ -1,6 +1,9 @@
 <article class="product_card">
     <img src="{{ asset('storage/images/products/' . $product->image) }}" alt="{{ $product->name }}" class="product__image">
     <div class="product__info">
+        @php
+            dd($product->category);
+        @endphp
         <p>{{ $product->category->name }}</p>
         <p class="product__name">{{ $product->name }}</p>
         <p class="product__price">{{ $product->price }}</p>

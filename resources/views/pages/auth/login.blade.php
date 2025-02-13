@@ -4,12 +4,12 @@
     <h1>Login page</h1>
     <form action="{{ route('login') }}" method="post">
         @csrf
-        @include('components.Input', [
+        @include('components.inputs.Input', [
             'type' => 'email',
             'name' => 'email',
             'placeholder' => 'Email',
         ])
-        @include('components.Input', [
+        @include('components.inputs.Input', [
             'type' => 'password',
             'name' => 'password',
             'placeholder' => 'Password',

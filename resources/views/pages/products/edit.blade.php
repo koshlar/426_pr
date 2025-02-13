@@ -5,22 +5,22 @@
     <form action="{{ route('products.update', ['product' => $product->id]) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        @include('components.Input', [
+        @include('components.inputs.Input', [
             'name' => 'name',
             'placeholder' => 'Name',
             'value' => $product->name,
         ])
-        @include('components.Input', [
+        @include('components.inputs.Input', [
             'type' => 'number',
             'name' => 'price',
             'placeholder' => 'Price',
             'value' => $product->price,
         ])
-        @include('components.Input', [
+        @include('components.inputs.Input', [
             'type' => 'file',
             'name' => 'image',
         ])
-        @include('components.Input', [
+        @include('components.inputs.Input', [
             'name' => 'description',
             'placeholder' => 'Description',
             'value' => $product->description,
